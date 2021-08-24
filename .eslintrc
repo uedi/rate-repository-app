@@ -6,11 +6,11 @@
       }
     },
     "extends": ["eslint:recommended", "plugin:react/recommended"],
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "env": {
       "browser": true
     },
     "rules": {
-      "react/prop-types": "off",
+      "react/prop-types": "off"
     }
 }
