@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, TouchableWithoutFeedback, StyleSheet } from 'react-native'
+import { View, TouchableNativeFeedback, StyleSheet } from 'react-native'
 import Text from './Text'
 import { Formik } from 'formik'
 import FormikTextInput from './FormikTextInput'
@@ -45,11 +45,11 @@ const SignInForm = ({ onSubmit }) => {
         <View style={styles.container}>
             <FormikTextInput name='username' placeholder='Username' />
             <FormikTextInput name='password' placeholder='Password' secureTextEntry />
-            <TouchableWithoutFeedback onPress={onSubmit} style={styles.button}>
+            <TouchableNativeFeedback onPress={onSubmit} style={styles.button}>
                 <View style={styles.button}>
                     <Text style={styles.buttonText} color={'white'} fontWeight='bold'>Sign in</Text>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableNativeFeedback>
         </View>
     )
 }
