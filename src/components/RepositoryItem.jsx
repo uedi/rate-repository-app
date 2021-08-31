@@ -53,7 +53,7 @@ const showNumber = (number) => {
 
 const StatisticBox = ({ value, label }) => (
     <View style={styles.statisticBox}>
-        <Text fontWeight='bold'>{value}</Text>
+        <Text testID={label} fontWeight='bold'>{value}</Text>
         <Text>{label}</Text>
     </View>
 )
@@ -67,10 +67,10 @@ const RepositoryItem = ({ item }) => {
                     source={{ uri: item.ownerAvatarUrl }}
                 />
                 <View style={styles.infoColumn}>
-                    <Text fontWeight='bold'>{item.fullName}</Text>
-                    <Text style={styles.repositoryDescriptionText}>{item.description}</Text>
+                    <Text testID='name' fontWeight='bold'>{item.fullName}</Text>
+                    <Text testID='description' style={styles.repositoryDescriptionText}>{item.description}</Text>
                     <View style={styles.languageBox}>
-                        <Text color='white'>{item.language}</Text>
+                        <Text testID='language' color='white'>{item.language}</Text>
                     </View>
                 </View>
             </View>
