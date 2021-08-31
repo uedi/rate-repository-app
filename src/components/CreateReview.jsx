@@ -7,6 +7,9 @@ import { Formik } from 'formik'
 import FormikTextInput from './FormikTextInput'
 import theme from '../theme'
 import * as yup from 'yup'
+import { useMutation } from '@apollo/client'
+import { CREATE_REVIEW } from '../graphql/mutations'
+import { useHistory } from 'react-router-native'
 
 const initialValues = {
     owner: '',
@@ -61,9 +64,25 @@ const CreateReviewForm = ({ onSubmit }) => {
 }
 
 const CreateReview = () => {
+    const [mutate] = useMutation(CREATE_REVIEW)
+    const history = useHistory()
 
     const onSubmit = async (values) => {
-        console.log(values)
+        const review = {
+            repositoryName: values.name,
+            ownerName: values.owner,
+            rating: Number(values.rating),
+            text: values.review
+        }
+        try {
+            const { data } = await mutate({ variables: { review } })
+            if(data) {
+                const id = data.createReview.repositoryId
+                history.push(`/repositories/${id}`)
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     return (
