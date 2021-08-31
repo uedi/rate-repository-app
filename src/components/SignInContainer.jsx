@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
 const SignInForm = ({ onSubmit }) => {
     return (
         <View style={styles.container}>
-            <FormikTextInput name='username' placeholder='Username' />
-            <FormikTextInput name='password' placeholder='Password' secureTextEntry />
-            <TouchableNativeFeedback onPress={onSubmit} style={styles.button}>
+            <FormikTextInput testID='usernameInput' name='username' placeholder='Username' />
+            <FormikTextInput testID='passwordInput' name='password' placeholder='Password' secureTextEntry />
+            <TouchableNativeFeedback testID='submitButton' onPress={onSubmit} style={styles.button}>
                 <View style={styles.button}>
                     <Text style={styles.buttonText} color={'white'} fontWeight='bold'>Sign in</Text>
                 </View>
