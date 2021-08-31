@@ -47,8 +47,6 @@ const ReviewItem = ({ review }) => {
                 <Text style={styles.date}>{date}</Text>
                 <Text>{review.text}</Text>
             </View>
-            
-
         </View>
     )
 }
