@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, Image, StyleSheet } from 'react-native'
+import { View, Image, StyleSheet, Pressable, TouchableNativeFeedback } from 'react-native'
+import * as Linking from 'expo-linking'
+import { useHistory } from 'react-router-native'
 import Text from './Text'
 import theme from '../theme'
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: 'white'
     },
     infoContainer: {
@@ -40,6 +41,18 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-evenly',
         alignItems: 'center'
+    },
+    githubButton: {
+        backgroundColor: theme.colors.primary,
+        alignSelf: 'stretch',
+        padding: 20,
+        borderRadius: 5,
+        marginLeft: 20,
+        marginRight: 20,
+        marginBottom: 20
+    },
+    githubButtonText: {
+        alignSelf: 'center'
     }
 })
 
@@ -58,9 +71,12 @@ const StatisticBox = ({ value, label }) => (
     </View>
 )
 
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, disableLink, showGithub }) => {
+    const history = useHistory()
     return (
-        <View style={styles.container}>
+        <Pressable style={styles.container}
+            onPress={() => !disableLink && history.push(`/repositories/${item.id}`)}
+        >
             <View style={styles.infoContainer}>
                 <Image 
                     style={styles.authorImage}
@@ -80,7 +96,16 @@ const RepositoryItem = ({ item }) => {
                 <StatisticBox value={showNumber(item.reviewCount)} label={'Reviews'}/>
                 <StatisticBox value={showNumber(item.ratingAverage)} label={'Rating'}/>
             </View>
-        </View>
+            { showGithub &&
+                <TouchableNativeFeedback
+                    onPress={() => Linking.openURL(item.url)}
+                >
+                    <View style={styles.githubButton}>
+                        <Text style={styles.githubButtonText} color={'white'} fontWeight='bold'>Open in Github</Text>
+                    </View>
+                </TouchableNativeFeedback>
+            }
+        </Pressable>
     )
 }
 
