@@ -18,7 +18,7 @@ const renderItem = ({item}) => (
     <RepositoryItem item={item} />
 )
 
-const RepositoryListContainer = ({ repositories, setOrder }) => {
+const RepositoryListContainer = ({ repositories, setOrder, setSearch }) => {
 
     const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
@@ -30,7 +30,7 @@ const RepositoryListContainer = ({ repositories, setOrder }) => {
                 data={repositoryNodes}
                 ItemSeparatorComponent={ItemSeparator}
                 renderItem={renderItem}
-                ListHeaderComponent={<RepositoryOrder setOrder={setOrder} />}
+                ListHeaderComponent={<RepositoryOrder setOrder={setOrder} setSearch={setSearch} />}
             />
         </>
     )

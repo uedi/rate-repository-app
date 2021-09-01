@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableNativeFeedback, Dimensions } from 'react-nat
 import Text from './Text'
 import { Ionicons } from '@expo/vector-icons'
 import theme from '../theme'
-import { Menu } from 'react-native-paper'
+import { Menu, Searchbar } from 'react-native-paper'
 
 const styles = StyleSheet.create({
     container: {
@@ -15,6 +15,11 @@ const styles = StyleSheet.create({
     },
     menu: {
         width: Dimensions.get('window').width - 100
+    },
+    searchContainer: {
+        paddingHorizontal: 20,
+        paddingTop: 20,
+        paddingBottom: 5
     }
 
 })
@@ -23,9 +28,10 @@ const latestText = 'Latest repositories'
 const highestText = 'Highest rated repositories'
 const lowestText = 'Lowest rated repositories'
 
-const RepositoryOrder = ({ setOrder }) => {
+const RepositoryOrder = ({ setOrder, setSearch }) => {
     const [visible, setVisible] = React.useState(false)
     const [selectedText, setSelectedText] = useState(latestText)
+    const [searchText, setSearchText] = useState('')
     const openMenu = () => setVisible(true)
     const closeMenu = () => setVisible(false)
 
@@ -52,7 +58,20 @@ const RepositoryOrder = ({ setOrder }) => {
         setTextAndClose(lowestText)
     }
 
+    const handleSearchTextChange = value => {
+        setSearchText(value)
+        setSearch(value)
+    }
+
     return (
+        <>
+            <View style={styles.searchContainer}>
+                <Searchbar
+                    placeholder='Search'
+                    onChangeText={handleSearchTextChange}
+                    value={searchText}
+                />
+            </View>
             <TouchableNativeFeedback onPress={openMenu}>
                 <View style={styles.container}>
                     <Text>{selectedText}</Text>
@@ -71,6 +90,7 @@ const RepositoryOrder = ({ setOrder }) => {
                 </View>
                 
             </TouchableNativeFeedback>
+        </>
     )
 }
 
