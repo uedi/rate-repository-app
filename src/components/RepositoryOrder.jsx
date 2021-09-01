@@ -23,7 +23,7 @@ const latestText = 'Latest repositories'
 const highestText = 'Highest rated repositories'
 const lowestText = 'Lowest rated repositories'
 
-const RepositoryOrder = () => {
+const RepositoryOrder = ({ setOrder }) => {
     const [visible, setVisible] = React.useState(false)
     const [selectedText, setSelectedText] = useState(latestText)
     const openMenu = () => setVisible(true)
@@ -35,14 +35,20 @@ const RepositoryOrder = () => {
     }
 
     const setLatest = () => {
+        setOrder({orderBy: 'CREATED_AT'})
         setTextAndClose(latestText)
     }
 
     const setHighest = () => {
+        setOrder({orderBy: 'RATING_AVERAGE'})
         setTextAndClose(highestText)
     }
 
     const setLowest = () => {
+        setOrder({
+            orderBy: 'RATING_AVERAGE',
+            orderDirection: 'ASC'
+        })
         setTextAndClose(lowestText)
     }
 

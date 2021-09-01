@@ -18,19 +18,19 @@ const renderItem = ({item}) => (
     <RepositoryItem item={item} />
 )
 
-const RepositoryListContainer = ({ repositories }) => {
+const RepositoryListContainer = ({ repositories, setOrder }) => {
 
     const repositoryNodes = repositories
     ? repositories.edges.map(edge => edge.node)
     : []
-
+    
     return (
         <>  
             <FlatList
                 data={repositoryNodes}
                 ItemSeparatorComponent={ItemSeparator}
                 renderItem={renderItem}
-                ListHeaderComponent={RepositoryOrder}
+                ListHeaderComponent={<RepositoryOrder setOrder={setOrder} />}
             />
         </>
     )
