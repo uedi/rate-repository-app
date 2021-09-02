@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
 
 })
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, useRepositoryName }) => {
     const dateStr = review.createdAt ? Date.parse(review.createdAt) : null
     const date = dateStr ? format(dateStr, 'dd.MM.yyyy') : ''
+    const topic = useRepositoryName ? review.repository.fullName : review.user.username
     return (
         <View style={styles.container}>
             <View style={styles.score}>
@@ -43,7 +44,7 @@ const ReviewItem = ({ review }) => {
                 >{review.rating}</Text>
             </View>
             <View style={styles.review}>
-                <Text fontWeight='bold'>{review.user.username}</Text>
+                <Text fontWeight='bold'>{topic}</Text>
                 <Text style={styles.date}>{date}</Text>
                 <Text>{review.text}</Text>
             </View>

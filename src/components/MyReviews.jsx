@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, FlatList } from 'react-native'
+import useAuthorizedUser from '../hooks/useAuthorizedUser'
 import ReviewItem from './ReviewItem'
 
 const styles = StyleSheet.create({
@@ -15,7 +16,17 @@ const ItemSeparator = () => <View style={styles.separator} />
 
 const MyReviews = () => {
 
-    const reviews = []
+    const { user } = useAuthorizedUser({
+        includeReviews: true
+    })
+
+    if(!user) {
+        return null
+    }
+
+    const reviews = user.reviews
+    ? user.reviews.edges.map(edge => edge.node)
+    : []
 
     const onEndReach = () => {
     }
@@ -23,7 +34,7 @@ const MyReviews = () => {
     return (
         <FlatList
             data={reviews}
-            renderItem={({ item }) => <ReviewItem review={item} />}
+            renderItem={({ item }) => <ReviewItem review={item} useRepositoryName />}
             keyExtractor={({ id }) => id}
             ItemSeparatorComponent={ItemSeparator}
             onEndReached={onEndReach}
