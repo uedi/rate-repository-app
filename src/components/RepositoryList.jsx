@@ -8,9 +8,9 @@ const RepositoryList = () => {
     const [search, setSearch] = useState({})
     const [searchQuery] = useDebounce(search, 500)
 
-    const variables = { ...order, ...searchQuery}
+    const variables = { ...order, ...searchQuery, first: 8 }
 
-    const { repositories } = useRepositories(variables)
+    const { repositories, fetchMore } = useRepositories(variables)
 
     const handleSetOrder = (order) => {
         setOrder(order)
@@ -20,8 +20,12 @@ const RepositoryList = () => {
         setSearch({ searchKeyword: searchText })
     }
 
+    const onEndReach = () => {
+        fetchMore()
+    }
+
     return (
-        <RepositoryListContainer repositories={repositories} setOrder={handleSetOrder} setSearch={handleSetSearch} />
+        <RepositoryListContainer repositories={repositories} setOrder={handleSetOrder} setSearch={handleSetSearch} onEndReach={onEndReach} />
     )
 }
 
