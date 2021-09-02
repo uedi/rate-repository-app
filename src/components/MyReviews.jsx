@@ -16,7 +16,8 @@ const ItemSeparator = () => <View style={styles.separator} />
 
 const MyReviews = () => {
 
-    const { user } = useAuthorizedUser({
+    const { user, fetchMore } = useAuthorizedUser({
+        first: 25,
         includeReviews: true
     })
 
@@ -29,6 +30,7 @@ const MyReviews = () => {
     : []
 
     const onEndReach = () => {
+        fetchMore()
     }
 
     return (
