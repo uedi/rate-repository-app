@@ -2,6 +2,8 @@ import React from 'react'
 import { View, StyleSheet, FlatList } from 'react-native'
 import useAuthorizedUser from '../hooks/useAuthorizedUser'
 import ReviewItem from './ReviewItem'
+import { useMutation } from '@apollo/client'
+import { DELETE_REVIEW } from '../graphql/mutations'
 
 const styles = StyleSheet.create({
     container: {
@@ -16,7 +18,9 @@ const ItemSeparator = () => <View style={styles.separator} />
 
 const MyReviews = () => {
 
-    const { user, fetchMore } = useAuthorizedUser({
+    const [mutate] = useMutation(DELETE_REVIEW)
+
+    const { user, fetchMore, refetch } = useAuthorizedUser({
         first: 25,
         includeReviews: true
     })
@@ -33,10 +37,21 @@ const MyReviews = () => {
         fetchMore()
     }
 
+    const deleteReview = async (id) => {
+        try {
+            const { data } = await mutate({ variables: { id: id } })
+            if(data && data.deleteReview) {
+                refetch()
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
         <FlatList
             data={reviews}
-            renderItem={({ item }) => <ReviewItem review={item} useRepositoryName />}
+            renderItem={({ item }) => <ReviewItem review={item} myReviewsView deleteReview={deleteReview} />}
             keyExtractor={({ id }) => id}
             ItemSeparatorComponent={ItemSeparator}
             onEndReached={onEndReach}
