@@ -19,7 +19,12 @@ const ItemSeparator = () => <View style={styles.separator} />
 
 const Repository = () => {
     const { id } = useParams()
-    const { repository } = useRepository(id)
+
+    const variables = {
+        id,
+        first: 8
+    }
+    const { repository, fetchMore } = useRepository(variables)
     
     if(!repository) {
         return null
@@ -29,6 +34,10 @@ const Repository = () => {
     ? repository.reviews.edges.map(edge => edge.node)
     : []
 
+    const onEndReach = () => {
+        fetchMore()
+    }
+
     return (
         <FlatList
             data={reviews}
@@ -37,6 +46,8 @@ const Repository = () => {
             ListHeaderComponent={() => <RepositoryItem item={repository} disableLink showGithub />}
             ListHeaderComponentStyle={{ marginBottom: 10 }}
             ItemSeparatorComponent={ItemSeparator}
+            onEndReached={onEndReach}
+            onEndReachedThreshold={0.5}
         />
     )
 }
